@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12365a">
+<title>UoC AI Decision Hub</title>
+<style>
+:root{--navy:#12365a;--blue:#205b87;--teal:#187b78;--ink:#172536;--muted:#5c6c7c;--line:#d9e2ea;--paper:#f4f7fa;--white:#fff;--gold:#e9b44c;--red:#a63d40;--green:#267451}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#102d4c,#1e5a7d);color:white;padding:28px 20px 24px}
+.wrap{max-width:980px;margin:auto}header .eyebrow{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;opacity:.8;font-weight:700}
+h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;margin:.45rem 0}.tagline{max-width:680px;margin:0;color:#e1edf5}
+main{max-width:980px;margin:24px auto;padding:0 16px 44px}
+.tabs{display:flex;gap:8px;margin:0 0 18px;flex-wrap:wrap}.tab{border:1px solid var(--line);background:white;color:var(--navy);padding:11px 17px;border-radius:12px;font-weight:700;cursor:pointer}.tab[aria-selected=true]{background:var(--navy);color:white;border-color:var(--navy)}
+.panel,.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 3px 12px #17334b0a}
+h2{margin:.1rem 0 .6rem;font-size:1.45rem;color:var(--navy)}h3{font-size:1.06rem;margin:0 0 8px;color:var(--navy)}
+.lead{color:var(--muted);margin-top:0}.step{padding:17px 0;border-top:1px solid var(--line)}.step:first-of-type{border-top:0}
+label.q{display:block;font-weight:700;margin-bottom:10px}
+.options{display:grid;gap:8px}.opt{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:11px;padding:10px 12px;cursor:pointer;background:#fff}.opt:has(input:checked){border-color:var(--blue);background:#eff6fb}.opt input{margin-top:5px;accent-color:var(--blue)}
+input[type=text],textarea,select{width:100%;padding:11px 12px;border:1px solid #bdcbd7;border-radius:10px;font:inherit;background:white;color:var(--ink)}
+textarea{min-height:100px;resize:vertical}.field{margin:12px 0}.field label{display:block;font-weight:650;margin-bottom:5px}
+button{font:inherit}.primary,.secondary{border:0;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--navy);color:white}.primary:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#eaf1f6;color:var(--navy);border:1px solid var(--line)}button:focus-visible,.tab:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #e9b44c;outline-offset:2px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.result{border-left:5px solid var(--teal);background:#eff7f5;padding:17px;border-radius:10px;margin-top:18px}.result.warn{border-color:#b17a19;background:#fff8e9}.result.stop{border-color:var(--red);background:#fff1f1}
+.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:.78rem;font-weight:750;background:#e8f0f6;color:var(--navy);margin-bottom:7px}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px;margin:14px 0}.level{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfd}.level b{display:block;color:var(--navy)}.level small{color:var(--muted)}
+.note{font-size:.88rem;color:var(--muted)}.hidden{display:none!important}.checklist{padding-left:20px}.checklist li{margin:5px 0}
+footer{max-width:980px;margin:auto;padding:0 16px 28px;color:var(--muted);font-size:.85rem}
+@media(max-width:600px){header{padding:23px 17px}.panel,.card{padding:16px}.tab{flex:1}}
+@media print{body{background:white}.tabs,.actions,header .tagline{display:none}.panel,.card{box-shadow:none;break-inside:avoid}}
+
+.role-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.role-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;padding:22px;border:2px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);cursor:pointer;min-height:205px;transition:border-color .15s,transform .15s,box-shadow .15s}
+.role-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 7px 20px #17334b12}
+.role-card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.role-card strong{font-size:1.2rem;color:var(--navy)}
+.role-card span:not(.role-icon):not(.role-cta){color:var(--muted)}
+.role-icon{font-size:2rem}.role-cta{margin-top:auto;color:var(--blue);font-weight:750}
+.note{font-size:.9rem;color:var(--muted)}
+@media(max-width:600px){.role-grid{grid-template-columns:1fr}.role-card{min-height:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="eyebrow">University of Curaçao · Center for Digital Learning</div><h1>UoC AI Decision Hub</h1><p class="tagline">Think. Decide. Use AI responsibly. A practical decision-support tool for instructors designing assignments and students completing them.</p></div></header>
+<main>
+<section id="welcomePanel" class="panel">
+  <h2>Welcome to the UoC AI Decision Hub</h2>
+  <p class="lead">Let's find the right guidance for you. First, tell us which best describes your role.</p>
+  <div class="role-grid">
+    <button class="role-card" id="chooseStudent" type="button">
+      <span class="role-icon" aria-hidden="true">🎓</span>
+      <strong>I'm a Student</strong>
+      <span>I want to know how I can use AI for my assignment or learning.</span>
+      <span class="role-cta">Continue as student →</span>
+    </button>
+    <button class="role-card" id="chooseInstructor" type="button">
+      <span class="role-icon" aria-hidden="true">👩‍🏫</span>
+      <strong>I'm an Instructor</strong>
+      <span>I want to decide how AI should be used in an assignment or assessment.</span>
+      <span class="role-cta">Continue as instructor →</span>
+    </button>
+  </div>
+  <p class="note">You can change your selection at any time.</p>
+</section>
+<nav class="tabs hidden" id="pathNav" aria-label="Decision hub navigation">
+<button class="tab" id="roleBack" type="button">← Change role</button>
+<button class="tab" id="levelsTab" aria-selected="false" type="button">Explore the five AI-use levels</button>
+</nav>
+<section id="studentPanel" class="panel hidden">
+<h2>Should I use AI for this assignment?</h2>
+<p class="lead">Answer one question at a time. Your instructor's rules for this specific assignment determine what is permitted.</p>
+<div id="studentWizard"></div><div id="studentResult" aria-live="polite"></div>
+</section>
+<section id="instructorPanel" class="panel hidden">
+<h2>How should AI be used in this assignment?</h2>
+<p class="lead">Answer one question at a time to develop clear, learning-outcome-aligned assignment guidance.</p>
+<div id="instructorWizard"></div><div id="instructorResult" aria-live="polite"></div>
+</section>
+<section id="levelsPanel" class="panel hidden">
+<h2>The five AI-use levels</h2><p class="lead">The UoC policy names five broad levels. The Npuls AI-waaier describes five practical categories for assignments and assessment. The labels below show both vocabularies to help users discuss the permitted role of AI.</p>
+<div class="levels">
+<div class="level"><b>1 · No AI</b><small>UoC: AI-free / Npuls: Geen AI. The task is completed without AI.</small></div>
+<div class="level"><b>2 · Plan with AI</b><small>Npuls: Plannen met AI. Ideas, planning and structure; submitted work shows the student's own development.</small></div>
+<div class="level"><b>3 · Improve with AI</b><small>Npuls: Verbeteren met AI. Editing, feedback and refinement with critical student review.</small></div>
+<div class="level"><b>4 · Collaborate with AI</b><small>Npuls: Samenwerken met AI. AI contributes to parts of the work; the student evaluates, adapts and takes responsibility.</small></div>
+<div class="level"><b>5 · Innovate with AI</b><small>Npuls: Innoveren met AI. Creative exploration and co-creation, with human direction and accountability.</small></div>
+</div>
+<p><b>Important:</b> The UoC policy document also uses the descriptions “AI as sparring partner”, “AI as assistant”, “AI as co-creator” and “fully AI”. These are related descriptions, not an exact one-to-one renaming of the Npuls categories. The instructor must state the actual permitted activities for each assignment.</p>
+</section>
+<section class="card">
+<h3>Responsible-use checklist</h3>
+<ul class="checklist">
+<li>Follow the assignment-specific instructions and ask the instructor if uncertain.</li>
+<li>Do not enter personal, sensitive, confidential or organisation-restricted information into public AI tools.</li>
+<li>Check facts, references, calculations and generated content against reliable sources.</li>
+<li>Remain responsible for the accuracy, originality and integrity of submitted work.</li>
+<li>Disclose and reference AI use in submitted work in accordance with UoC guidance and applicable citation rules.</li>
+<li>Keep human oversight in decisions that affect students, staff or assessment outcomes.</li>
+</ul>
+<p class="note">This tool provides guidance and does not determine academic misconduct, grant permission to use AI, or replace UoC policy, faculty rules, the OER or an instructor's assessment authority.</p>
+</section>
+</main>
+<footer>UoC AI Decision Hub · Prototype for review by the Center for Digital Learning (CDL), Department of Quality Assurance (DQA) and the UoC AI Team.</footer>
+<script>
+const $=id=>document.getElementById(id);
+let currentRole='';
+function tab(which){
+ ['student','instructor','levels'].forEach(k=>$(k+'Panel').classList.toggle('hidden',k!==which));
+ $('pathNav').classList.remove('hidden');
+ $('levelsTab').setAttribute('aria-selected',String(which==='levels'));
+}
+function chooseRole(role){
+ currentRole=role;
+ $('welcomePanel').classList.add('hidden');
+ tab(role);
+ render(role);
+}
+$('chooseStudent').onclick=()=>chooseRole('student');
+$('chooseInstructor').onclick=()=>chooseRole('instructor');
+$('roleBack').onclick=()=>{
+ currentRole='';
+ ['student','instructor','levels'].forEach(k=>$(k+'Panel').classList.add('hidden'));
+ $('pathNav').classList.add('hidden');
+ $('welcomePanel').classList.remove('hidden');
+};
+$('levelsTab').onclick=()=>tab('levels');
+const flows={
+student:{root:'studentWizard',result:'studentResult',answers:[],step:0,questions:[
+{q:'Have you read the course guide and the instructions for this assignment?',opts:[['yes','Yes, and I understand the AI rules.'],['no','No, or I am not sure.']]},
+{q:'What are you expected to demonstrate?',opts:[['skills','My own knowledge, skills, reasoning or personal reflection.'],['practice','Understanding, practice or feedback as I learn.'],['product','A product, solution or creative outcome.']]},
+{q:'Have you made your own attempt before asking AI to help?',opts:[['yes','Yes, I have made an attempt.'],['no','Not yet.']]},
+{q:'What do you want AI to do?',opts:[['plan','Help me plan, brainstorm or organise ideas.'],['improve','Give feedback or help improve my own draft.'],['collab','Work with me on parts of the task or develop ideas together.'],['create','Generate most or all of the work for submission.'],['learn','Explain concepts, quiz me or help me practise.']]},
+{q:'Can you explain what AI contributed and verify the information it gave you?',opts:[['yes','Yes.'],['no','No / I am not sure.']]}
+]},
+instructor:{root:'instructorWizard',result:'instructorResult',answers:[],step:0,questions:[
+{q:'What must the student demonstrate?',opts:[['independent','Independent mastery, personal reflection or unaided performance is central.'],['process','Learning process, development, reasoning or application is central.'],['innovation','Creative exploration, problem-solving or an AI-enabled product is central.']]},
+{q:'Would AI use replace the very skill or thinking this assessment is meant to measure?',opts:[['yes','Yes.'],['no','No, students still need to demonstrate that skill.'],['partial','It depends on which part of the task.']]},
+{q:'What AI contribution is educationally appropriate?',opts:[['none','No AI use.'],['plan','Planning, ideas and structure.'],['improve','Editing, feedback and improvement.'],['collab','Collaboration, drafting or developing parts of the work.'],['create','Extensive AI use or co-creation.']]},
+{q:'Have you considered privacy, confidentiality, bias, accuracy, accessibility and academic integrity?',opts:[['yes','Yes, safeguards and instructions are defined.'],['no','No, these still need attention.']]},
+{q:'Can students clearly understand what is allowed, prohibited and how to disclose AI use?',opts:[['yes','Yes, I will state this before the assignment begins.'],['no','Not yet.']]}
+]}
+};
+function render(key){
+ const f=flows[key],root=$(f.root),n=f.questions.length;
+ if(f.step>=n){finish(key);return;}
+ const q=f.questions[f.step],chosen=f.answers[f.step]||'';
+ root.innerHTML=`<div class="step"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><span class="pill">Question ${f.step+1} of ${n}</span><span style="color:var(--muted);font-size:.9rem">${Math.round(f.step/n*100)}% complete</span></div><div style="height:7px;background:#e8eef3;border-radius:9px;margin:12px 0 20px;overflow:hidden"><div style="height:100%;width:${(f.step+1)/n*100}%;background:var(--teal)"></div></div><h3 style="font-size:1.2rem;margin:0 0 14px">${q.q}</h3><div class="options">${q.opts.map(([v,t])=>`<label class="opt"><input type="radio" name="${key}answer" value="${v}" ${chosen===v?'checked':''}>${t}</label>`).join('')}</div></div><div class="actions">${f.step?'<button class="secondary" id="'+key+'Back" type="button">Back</button>':''}<button class="primary" id="${key}Next" type="button" ${chosen?'':'disabled'}>${f.step===n-1?'Show my guidance':'Next question'}</button><button class="secondary" id="${key}Restart" type="button">Start again</button></div>`;
+ root.querySelectorAll('input').forEach(x=>x.onchange=()=>{f.answers[f.step]=x.value;$(key+'Next').disabled=false;});
+ $(key+'Next').onclick=()=>{if(!f.answers[f.step])return;f.step++;render(key)};
+ if(f.step)$(key+'Back').onclick=()=>{f.step--;render(key)};
+ $(key+'Restart').onclick=()=>{f.answers=[];f.step=0;$(f.result).innerHTML='';render(key)};
+}
+function box(title,body,kind=''){return `<div class="result ${kind}"><span class="pill">${title}</span><div>${body}</div></div>`}
+function finish(key){
+ const f=flows[key],a=f.answers;
+ if(key==='student'){
+ let title,body,kind='';
+ if(a[0]==='no'){title='Pause and check the rules';kind='stop';body='Read the course guide and assignment instructions. If the AI rules are unclear, ask your instructor before using AI.';}
+ else if(a[4]==='no'){title='Pause: build understanding and verification';kind='warn';body='Do not rely on AI output you cannot explain or verify. Ask for explanations, compare claims with credible sources and keep your own reasoning visible.';}
+ else if(a[3]==='create'){title='Check permission before proceeding';kind='warn';body='Generating most or all of the submission may conflict with the learning outcomes or assignment rules. Do not submit AI-generated work as your own. Ask your instructor what level is permitted.';}
+ else if(a[2]==='no'&&a[3]!=='learn'){title='Try the task yourself first';kind='warn';body='Make an initial attempt, note where you are stuck, then use AI only for a permitted form of support.';}
+ else {title='Use AI as a transparent learning partner';body='Your intended use may support learning if it is allowed for this assignment. Stay in control: question the output, verify it and make your own decisions.';}
+ body+='<ul><li>Follow the assignment-specific AI boundaries.</li><li>Keep a record of tools and prompts where required.</li><li>Disclose and reference AI use in line with UoC guidance.</li><li>Never upload personal or confidential information to an unapproved tool.</li></ul>';
+ $(f.result).innerHTML=box(title,body,kind)+`<div class="actions"><button class="secondary" onclick="window.print()">Print / save as PDF</button><button class="secondary" onclick="copyResult('studentResult')">Copy guidance</button><button class="primary" onclick="restartFlow('student')">Start again</button></div>`;
+ }else{
+ let lvl=a[2],title,body,kind='';
+ if(a[3]==='no'||a[4]==='no'){title='Define safeguards and communicate rules first';body='Address privacy, confidentiality, bias, accuracy, integrity and disclosure before publishing the assignment rules.';kind='warn';}
+ else if(a[1]==='yes'&&lvl!=='none'){title='Redesign or restrict AI use';body='The proposed AI contribution could replace the skill being assessed. Consider an AI-free component, oral defence, process evidence or a clearly separated AI-supported stage.';kind='warn';lvl='none';}
+ else if(a[0]==='independent'&&lvl!=='none'){title='Consider an AI-free assessment component';body='If unaided mastery or personal reflection is central, protect that learning outcome and clearly distinguish any AI-supported stages.';kind='warn';}
+ else{title='Suggested assignment AI category';body='This is a starting point, not automatic permission. Specify exactly which AI activities are allowed and what students must produce themselves.';}
+ const names={none:'Level 1 · No AI',plan:'Level 2 · Plan with AI',improve:'Level 3 · Improve with AI',collab:'Level 4 · Collaborate with AI',create:'Level 5 · Innovate with AI'};
+ body+=`<p><b>Suggested category: ${names[lvl]}</b></p><p><b>Assignment rules to publish:</b></p><ul><li>Permitted AI activities and tools.</li><li>Prohibited activities and independent work requirements.</li><li>Disclosure, citation and process-evidence expectations.</li><li>How students should verify claims and references.</li><li>Privacy-safe alternatives and a contact route for questions.</li></ul>`;
+ $(f.result).innerHTML=box(title,body,kind)+`<div class="actions"><button class="secondary" onclick="window.print()">Print / save as PDF</button><button class="secondary" onclick="copyResult('instructorResult')">Copy assignment guidance</button><button class="primary" onclick="restartFlow('instructor')">Start again</button></div>`;
+ }
+ f.step=f.questions.length;
+}
+function restartFlow(key){const f=flows[key];f.answers=[];f.step=0;$(f.result).innerHTML='';render(key)}
+function copyResult(id){const t=$(id).innerText;navigator.clipboard?.writeText(t).then(()=>alert('Guidance copied.')).catch(()=>alert('Copy is not available in this browser.'))}
+
+</script>
+</body></html>
